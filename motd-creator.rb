@@ -1,19 +1,27 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+
+options = ARGV.getopts('', 'font:', 'fortune-file:', 'width:')
+options['font'] ||= 'basic'
+options['width'] ||= 79
+options['width'] = options['width'].to_i
+
 borderChars = ['~', '*']
 
-79.times.each {|i| print borderChars[i%2]}
+options['width'].times.each {|i| print borderChars[i%2]}
 print "\n"
 borderChars.reverse!
 
-lines = `hostname -s | figlet -f basic -c -w 77`.split("\n")
-lines += `fortune | figlet -f term -c -w 77`.split("\n")
+lines = `hostname -s | figlet -f #{options['font']} -c -w #{options['width'] - 2}`.split("\n")
+lines += `fortune #{options['fortune-file']}| figlet -f term -c -w \
+		  #{options['width']}`.split("\n")
 
 lastBorderChar = '~'
 lines.each_with_index do |line, i|
 	print borderChars[i%2]
 	print line
-	print ' ' * (77 - line.length)
+	print ' ' * (options['width'] - 2 - line.length)
 	print borderChars[i%2]
 	print "\n"
 
@@ -21,6 +29,6 @@ lines.each_with_index do |line, i|
 end
 
 borderChars.reverse! if lastBorderChar == borderChars[0]
-79.times.each {|i| print borderChars[i%2]}
+options['width'].times.each {|i| print borderChars[i%2]}
 print "\n"
 
