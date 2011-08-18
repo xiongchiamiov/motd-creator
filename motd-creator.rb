@@ -13,9 +13,11 @@ options['width'].times {|i| print borderChars[i%2]}
 print "\n"
 borderChars.reverse!
 
-lines = `hostname -s | figlet -f #{options['font']} -c -w #{options['width'] - 2}`.split("\n")
+lines = ['']
+lines += `hostname -s | figlet -f #{options['font']} -c -w #{options['width'] - 2}`.split("\n")
 lines += `fortune #{options['fortune-file']}| figlet -f term -c -w \
 		  #{options['width'] - 2}`.split("\n")
+lines << ''
 
 lastBorderChar = '~'
 lines.each_with_index do |line, i|
