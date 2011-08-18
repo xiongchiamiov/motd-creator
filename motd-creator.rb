@@ -9,7 +9,7 @@ options['width'] = options['width'].to_i
 
 borderChars = ['~', '*']
 
-options['width'].times.each {|i| print borderChars[i%2]}
+options['width'].times {|i| print borderChars[i%2]}
 print "\n"
 borderChars.reverse!
 
@@ -29,6 +29,6 @@ lines.each_with_index do |line, i|
 end
 
 borderChars.reverse! if lastBorderChar == borderChars[0]
-options['width'].times.each {|i| print borderChars[i%2]}
+options['width'].times {|i| print borderChars[i%2]}
 print "\n"
 
