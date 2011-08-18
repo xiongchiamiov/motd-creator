@@ -15,7 +15,7 @@ borderChars.reverse!
 
 lines = `hostname -s | figlet -f #{options['font']} -c -w #{options['width'] - 2}`.split("\n")
 lines += `fortune #{options['fortune-file']}| figlet -f term -c -w \
-		  #{options['width']}`.split("\n")
+		  #{options['width'] - 2}`.split("\n")
 
 lastBorderChar = '~'
 lines.each_with_index do |line, i|
